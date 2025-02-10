@@ -8,12 +8,14 @@ import javafx.scene.control.TextField;
 import java.util.List;
 
 public class CalendarController {
+
+    public Button addEventButton;
     @FXML
-    private Button saveButton;
+    public Button saveAllButton;
     @FXML
-    private Button deleteButton; // New delete button
+    public Button deleteButton; // New delete button
     @FXML
-    private Button refreshButton; // New refresh button
+    public Button refreshButton; // New refresh button
     @FXML
     private TextField eventTitleField; // Field for event title
     @FXML

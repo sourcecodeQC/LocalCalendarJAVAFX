@@ -12,10 +12,10 @@
         <TextField fx:id="eventStartTimeField" layoutX="14.0" layoutY="86.0" promptText="Enter start time (HHMM)" />
         <TextField fx:id="eventEndTimeField" layoutX="14.0" layoutY="122.0" promptText="Enter end time (HHMM)" />
         <TextField fx:id="eventPriorityField" layoutX="14.0" layoutY="158.0" promptText="Enter priority" />
-        <Button fx:id="addEventButton" layoutX="14.0" layoutY="200.0" onAction="#handleAddButtonAction" text="Add" />
         <Button fx:id="deleteButton" layoutX="67.0" layoutY="200.0" onAction="#handleDeleteButtonAction" text="Delete" />
         <Button fx:id="refreshButton" layoutX="134.0" layoutY="200.0" onAction="#handleRefreshButtonAction" text="Refresh" />
         <ListView fx:id="eventListView" layoutX="14.0" layoutY="240.0" prefHeight="200.0" prefWidth="300.0" />
         <Button fx:id="saveAllButton" layoutX="206.0" layoutY="200.0" onAction="#handleSaveAllEvents" text="Save All" />
+        <Button fx:id="addEventButton" layoutX="14.0" layoutY="200.0" onAction="#handleAddButtonAction" text="Add" />
     </children>
 </AnchorPane>
