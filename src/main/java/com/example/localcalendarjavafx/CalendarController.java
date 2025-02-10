@@ -1,77 +1,51 @@
 package com.example.localcalendarjavafx;
 
 import javafx.fxml.FXML;
-import javafx.scene.control.TableView;
-import javafx.scene.control.TextInputDialog;
+import javafx.scene.control.Button;
+import javafx.scene.control.ListView;
+import javafx.scene.control.TextField;
 
 import java.util.List;
-import java.util.Optional;
 
 public class CalendarController {
+    @FXML
+    private Button saveButton;
+    @FXML
+    private TextField eventTitleField; // Field for event title
+    @FXML
+    private TextField eventDateField; // Field for event date
+    @FXML
+    private TextField eventStartTimeField; // Field for start time in HHMM format
+    @FXML
+    private TextField eventEndTimeField; // Field for end time in HHMM format
+    @FXML
+    private TextField eventPriorityField; // Field for event priority
+    @FXML
+    private ListView<Event> eventListView; // ListView to display events
 
     @FXML
-    private TableView<Event> eventTable;
+    public void handleSaveButtonAction() {
+        String title = eventTitleField.getText();
+        String date = eventDateField.getText();
+        int startTime = HourToMin.convertToMin(eventStartTimeField.getText()); // Convert HHMM to minutes
+        int endTime = HourToMin.convertToMin(eventEndTimeField.getText()); // Convert HHMM to minutes
+        int priority = Integer.parseInt(eventPriorityField.getText());
 
-    @FXML
-    public void handleAddEvent() {
-        TextInputDialog dialog = new TextInputDialog();
-        dialog.setTitle("Add Event");
-        dialog.setHeaderText("Enter event details");
-
-        // Gather event details
-        dialog.setContentText("Event Title:");
-        Optional<String> titleResult = dialog.showAndWait();
-        if (titleResult.isPresent()) {
-            String title = titleResult.get();
-
-            dialog.setContentText("Event Date (YYYY-MM-DD):");
-            Optional<String> dateResult = dialog.showAndWait();
-            if (dateResult.isPresent()) {
-                String date = dateResult.get();
-
-                dialog.setContentText("Start Time (HHMM):");
-                Optional<String> startTimeResult = dialog.showAndWait();
-                if (startTimeResult.isPresent()) {
-                    int startHHMM = Integer.parseInt(startTimeResult.get());
-
-                    dialog.setContentText("End Time (HHMM):");
-                    Optional<String> endTimeResult = dialog.showAndWait();
-                    if (endTimeResult.isPresent()) {
-                        int endHHMM = Integer.parseInt(endTimeResult.get());
-
-                        dialog.setContentText("Priority (1-5):");
-                        Optional<String> priorityResult = dialog.showAndWait();
-                        if (priorityResult.isPresent()) {
-                            int priority = Integer.parseInt(priorityResult.get());
-
-                            // Create a new event and add it to the calendar
-                            Event newEvent = new Event(title, date, startHHMM, endHHMM, priority);
-                            CalendarManager.addEvent(newEvent);
-                            updateEventTable(); // Call to refresh the table
-                        }
-                    }
-                }
-            }
-        }
+        Event newEvent = new Event(title, date, startTime, endTime, priority); // Create new event
+        CalendarManager.addEvent(newEvent); // Add event to manager
+        CalendarManager.saveEvents(); // Save events using the original method
+        displayEvents(); // Refresh the event display
     }
 
     @FXML
-    public void handleViewEvents() {
-        refreshEventTable();
+    public void initialize() {
+        CalendarManager.loadEvents(); // Load events on initialization
+        displayEvents(); // Display loaded events
     }
 
-    private void updateEventTable() {
-        List<Event> events = CalendarManager.getEvents(); // Get the list of events
-        eventTable.getItems().clear(); // Clear existing items in the table
-        eventTable.getItems().addAll(events); // Add all events to the table
-    }
-
-    private void refreshEventTable() {
-        updateEventTable(); // Call the update method to refresh the table
-    }
-
-    @FXML
-    public void handleSaveEvents() {
-        CalendarManager.saveEvents(); // Call the save method in CalendarManager
+    private void displayEvents() {
+        List<Event> events = CalendarManager.getEvents(); // Get events from manager
+        eventListView.getItems().clear(); // Clear existing items
+        eventListView.getItems().addAll(events); // Add all events to the ListView
     }
 }

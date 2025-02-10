@@ -7,12 +7,11 @@ import javafx.scene.Scene;
 import javafx.stage.Stage;
 
 public class Main extends Application {
-
     @Override
     public void start(Stage primaryStage) throws Exception {
-        Parent root = FXMLLoader.load(getClass().getResource("calendar_view.fxml")); // Load the new FXML file
+        Parent root = FXMLLoader.load(getClass().getResource("calendar_view.fxml"));
         primaryStage.setTitle("Local Calendar");
-        primaryStage.setScene(new Scene(root, 600, 400));
+        primaryStage.setScene(new Scene(root, 350, 500));
         primaryStage.show();
     }
 

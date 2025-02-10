@@ -1,15 +1,9 @@
 package com.example.localcalendarjavafx;
 
 public class HourToMin {
-    public static int convertToMin(int hhmm){
-        int hours = hhmm / 100;
-        int minutes = hhmm % 100;
-
-        //validation of input
-        if( hours <0 || hours > 23 || minutes < 0 || minutes > 59){
-            throw new IllegalArgumentException("Invalid time format");
-        }
-
+    public static int convertToMin(String hhmm) {
+        int hours = Integer.parseInt(hhmm.substring(0, 2));
+        int minutes = Integer.parseInt(hhmm.substring(2, 4));
         return hours * 60 + minutes;
     }
 }

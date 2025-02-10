@@ -2,20 +2,20 @@ package com.example.localcalendarjavafx;
 
 public class Event {
     private String title;
-    private String date; // Format: YYYY-MM-DD
-    private int startHHMM; // Start time in HHMM format
-    private int endHHMM; // End time in HHMM format
-    private int priority; // Priority as an integer
+    private String date; // Assuming date is a String for simplicity
+    private int startTime; // Start time in minutes
+    private int endTime; // End time in minutes
+    private int priority;
 
-    public Event(String title, String date, int startHHMM, int endHHMM, int priority) {
+    // Updated constructor to match the parameters
+    public Event(String title, String date, int startTime, int endTime, int priority) {
         this.title = title;
         this.date = date;
-        this.startHHMM = startHHMM;
-        this.endHHMM = endHHMM;
+        this.startTime = startTime;
+        this.endTime = endTime;
         this.priority = priority;
     }
 
-    // Getters
     public String getTitle() {
         return title;
     }
@@ -24,29 +24,20 @@ public class Event {
         return date;
     }
 
-    public int getStartHHMM() {
-        return startHHMM;
+    public int getStartTime() {
+        return startTime;
     }
 
-    public int getEndHHMM() {
-        return endHHMM;
+    public int getEndTime() {
+        return endTime;
     }
 
     public int getPriority() {
         return priority;
     }
 
-    public int getStartMin() {
-        return MinToHHMM.hhmmToMin(startHHMM);
-    }
-
-    public int getEndMin() {
-        return MinToHHMM.hhmmToMin(endHHMM);
-    }
-
     @Override
     public String toString() {
-        return String.format("Event: %s, Date: %s, Start: %04d, End: %04d, Priority: %d",
-                title, date, startHHMM, endHHMM, priority);
+        return String.format("%s on %s from %d to %d (Priority: %d)", title, date, startTime, endTime, priority);
     }
 }
