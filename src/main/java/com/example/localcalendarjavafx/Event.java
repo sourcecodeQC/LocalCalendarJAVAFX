@@ -35,14 +35,12 @@ public class Event {
         return priority;
     }
 
-    // Method to get start time in HHMM format
     public String getStartHHMM() {
         int hours = startTime / 60;
         int minutes = startTime % 60;
         return String.format("%02d%02d", hours, minutes);
     }
 
-    // Method to get end time in HHMM format
     public String getEndHHMM() {
         int hours = endTime / 60;
         int minutes = endTime % 60;

@@ -2,7 +2,6 @@ package com.example.localcalendarjavafx;
 
 import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
-import javafx.scene.control.Dialog;
 import javafx.scene.control.ListView;
 
 import java.util.List;
@@ -17,12 +16,10 @@ public class PriorityCollisionHandler {
     public static void handleEventAddition(Event newEvent, List<Event> existingEvents, ListView<Event> eventListView) {
         for (Event existingEvent : existingEvents) {
             if (checkCollision(newEvent, existingEvent)) {
-                // Check priority
                 String message = newEvent.getPriority() < existingEvent.getPriority() ?
                         "New event has lower priority than an existing event!" :
                         "New event has higher priority than an existing event!";
 
-                // Display overlapping events
                 Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
                 alert.setTitle("Event Collision");
                 alert.setHeaderText(message);
@@ -41,12 +38,12 @@ public class PriorityCollisionHandler {
                 if (result.isPresent()) {
                     if (result.get() == amendExisting) {
                         moveEvent(existingEvent, newEvent.getEndTime());
-                        eventListView.getItems().remove(existingEvent); // Remove the old event
-                        eventListView.getItems().add(existingEvent); // Add the updated event
+                        eventListView.getItems().remove(existingEvent);
+                        eventListView.getItems().add(existingEvent);
                     } else if (result.get() == amendNew) {
                         moveEvent(newEvent, existingEvent.getEndTime());
-                        eventListView.getItems().remove(newEvent); // Remove the old event
-                        eventListView.getItems().add(newEvent); // Add the updated event
+                        eventListView.getItems().remove(newEvent);
+                        eventListView.getItems().add(newEvent);
                     } else if (result.get() == abort) {
                         System.out.println("Aborting the addition of the new event.");
                         return; // Exit without adding the new event

@@ -6,12 +6,16 @@ import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
 
 import java.util.List;
+import java.util.Timer;
+import java.util.TimerTask;
 
 public class CalendarController {
     @FXML
     private Button saveButton;
     @FXML
     private Button deleteButton; // New delete button
+    @FXML
+    private Button refreshButton; // New refresh button
     @FXML
     private TextField eventTitleField; // Field for event title
     @FXML
@@ -24,6 +28,23 @@ public class CalendarController {
     private TextField eventPriorityField; // Field for event priority
     @FXML
     private ListView<Event> eventListView; // ListView to display events
+
+    private Timer timer;
+
+    @FXML
+    public void initialize() {
+        CalendarManager.loadEvents(); // Load events on initialization
+        displayEvents(); // Display loaded events
+
+        // Set up a timer for auto-refresh
+        timer = new Timer();
+        timer.scheduleAtFixedRate(new TimerTask() {
+            @Override
+            public void run() {
+                refreshEvents();
+            }
+        }, 1000, 1000); // Refresh every second
+    }
 
     @FXML
     public void handleSaveButtonAction() {
@@ -51,9 +72,13 @@ public class CalendarController {
     }
 
     @FXML
-    public void initialize() {
-        CalendarManager.loadEvents(); // Load events on initialization
-        displayEvents(); // Display loaded events
+    public void handleRefreshButtonAction() {
+        refreshEvents(); // Manually refresh the events
+    }
+
+    private void refreshEvents() {
+        CalendarManager.loadEvents(); // Reload events from the file
+        displayEvents(); // Refresh the ListView
     }
 
     private void displayEvents() {
