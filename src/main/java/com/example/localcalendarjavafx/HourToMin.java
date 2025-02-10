@@ -1,3 +1,5 @@
+package com.example.localcalendarjavafx;
+
 public class HourToMin {
     public static int convertToMin(int hhmm){
         int hours = hhmm / 100;

@@ -1,24 +1,21 @@
+package com.example.localcalendarjavafx;
+
 public class Event {
     private String title;
-    private String date; // Format: yyyy-mm-dd
-    private int startTime; // in minutes from midnight
-    private int endTime; // in minutes from midnight // ditto
-    private int priority; // Lower values indicate higher priority
+    private String date; // Format: YYYY-MM-DD
+    private int startHHMM; // Start time in HHMM format
+    private int endHHMM; // End time in HHMM format
+    private int priority; // Priority as an integer
 
-    public Event(String title, String date, int startTime, int endTime, int priority) {
-        if (startTime >= endTime) {
-            throw new IllegalArgumentException("Start time must be less than end time.");
-        }
-        if (priority < 0) {
-            throw new IllegalArgumentException("Priority must be a non-negative integer.");
-        }
+    public Event(String title, String date, int startHHMM, int endHHMM, int priority) {
         this.title = title;
         this.date = date;
-        this.startTime = startTime;
-        this.endTime = endTime;
+        this.startHHMM = startHHMM;
+        this.endHHMM = endHHMM;
         this.priority = priority;
     }
 
+    // Getters
     public String getTitle() {
         return title;
     }
@@ -27,35 +24,29 @@ public class Event {
         return date;
     }
 
-    public int getStartTime() {
-        return startTime;
+    public int getStartHHMM() {
+        return startHHMM;
     }
 
-    public int getEndTime() {
-        return endTime;
+    public int getEndHHMM() {
+        return endHHMM;
     }
 
     public int getPriority() {
         return priority;
     }
 
-    // Setter methods for startTime and endTime
-    public void setStartTime(int startTime) {
-        this.startTime = startTime;
+    public int getStartMin() {
+        return MinToHHMM.hhmmToMin(startHHMM);
     }
 
-    public void setEndTime(int endTime) {
-        this.endTime = endTime;
+    public int getEndMin() {
+        return MinToHHMM.hhmmToMin(endHHMM);
     }
 
     @Override
     public String toString() {
-        return "Event{" +
-                "title='" + title + '\'' +
-                ", date='" + date + '\'' +
-                ", startTime=" + MinToHHMM.convertToHHMM(startTime) + // Convert minutes to HHMM format
-                ", endTime=" + MinToHHMM.convertToHHMM(endTime) + // Convert minutes to HHMM format
-                ", priority=" + priority +
-                '}';
+        return String.format("Event: %s, Date: %s, Start: %04d, End: %04d, Priority: %d",
+                title, date, startHHMM, endHHMM, priority);
     }
 }
