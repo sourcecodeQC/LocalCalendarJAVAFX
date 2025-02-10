@@ -23,6 +23,7 @@ public class FileManagerIO {
                         event.getStartTime() + "," + event.getEndTime() + "," +
                         event.getPriority());
                 outputIO.newLine();
+                System.out.println("Saving event: " + event); // Debug statement
             }
             System.out.println("Events saved to " + FILENAME);
         } catch (IOException e) {

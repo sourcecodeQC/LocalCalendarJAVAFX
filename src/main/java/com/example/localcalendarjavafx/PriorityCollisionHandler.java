@@ -65,10 +65,8 @@ public class PriorityCollisionHandler {
                     } else if (result.get() == override) {
                         // Add the new event without any adjustments
                         eventListView.getItems().add(newEvent);
-                        CalendarManager.addEvent(newEvent);
-                        FileManagerIO.saveEvents(CalendarManager.getEvents());
-                        System.out.println("Both events added successfully.");
                     }
+                    CalendarManager.saveEvents(); // Save events after any modification
                 }
                 return; // Exit after handling the first conflict
             }
@@ -76,7 +74,7 @@ public class PriorityCollisionHandler {
 
         // If no conflicts, add the event
         CalendarManager.addEvent(newEvent);
-        FileManagerIO.saveEvents(CalendarManager.getEvents());
+        CalendarManager.saveEvents(); // Save events after adding a new event
         System.out.println("Event added successfully.");
     }
 }

@@ -8,6 +8,8 @@ public class CalendarManager {
 
     public static void addEvent(Event event) {
         events.add(event); // Add event to the list
+        System.out.println("Event added: " + event); // Debug statement
+        saveEvents(); // Save events after adding a new event
     }
 
     public static List<Event> getEvents() {
@@ -19,6 +21,8 @@ public class CalendarManager {
     }
 
     public static void saveEvents() {
+        System.out.println("Saving events: " + events); // Debug statement
         FileManagerIO.saveEvents(events); // Save events using the original method
+        System.out.println("All events saved successfully."); // Debug statement
     }
 }
