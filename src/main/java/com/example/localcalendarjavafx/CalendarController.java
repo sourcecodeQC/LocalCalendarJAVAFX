@@ -34,7 +34,7 @@ public class CalendarController {
     }
 
     @FXML
-    public void handleSaveButtonAction() {
+    public void handleAddButtonAction() {
         String title = eventTitleField.getText();
         String date = eventDateField.getText();
         int startTime = HourToMin.convertToMin(eventStartTimeField.getText()); // Convert HHMM to minutes
@@ -72,5 +72,11 @@ public class CalendarController {
         List<Event> events = CalendarManager.getEvents(); // Get events from manager
         eventListView.getItems().clear(); // Clear existing items
         eventListView.getItems().addAll(events); // Add all events to the ListView
+    }
+
+    public void handleSaveAllEvents() {
+        List<Event> allEvents = CalendarManager.getEvents(); // Assuming this method retrieves all events
+        FileManagerIO.saveEvents(allEvents); // Save all events to file
+        System.out.println("All events saved successfully.");
     }
 }

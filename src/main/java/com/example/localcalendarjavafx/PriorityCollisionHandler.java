@@ -37,17 +37,22 @@ public class PriorityCollisionHandler {
 
                 if (result.isPresent()) {
                     if (result.get() == amendExisting) {
-                        moveEvent(existingEvent, newEvent.getEndTime());
-                        eventListView.getItems().remove(existingEvent);
-                        eventListView.getItems().add(existingEvent);
+                        // Move existing event to start 30 minutes after the new event ends
+                        moveExistingEvent(existingEvent, newEvent.getEndTime() + 30, eventListView.getItems());
                     } else if (result.get() == amendNew) {
-                        moveEvent(newEvent, existingEvent.getEndTime());
+                        // Move new event to start 30 minutes after the existing event ends
+                        int newStartTime = existingEvent.getEndTime() + 30;
+                        int duration = newEvent.getEndTime() - newEvent.getStartTime();
+                        int newEndTime = newStartTime + duration;
+                        Event updatedEvent = new Event(newEvent.getTitle(), newEvent.getDate(), newStartTime, newEndTime, newEvent.getPriority());
                         eventListView.getItems().remove(newEvent);
-                        eventListView.getItems().add(newEvent);
+                        eventListView.getItems().add(updatedEvent);
                     } else if (result.get() == abort) {
                         System.out.println("Aborting the addition of the new event.");
                         return; // Exit without adding the new event
                     } else if (result.get() == override) {
+                        // Add the new event without any adjustments
+                        eventListView.getItems().add(newEvent);
                         CalendarManager.addEvent(newEvent);
                         FileManagerIO.saveEvents(CalendarManager.getEvents());
                         System.out.println("Both events added successfully.");
@@ -63,17 +68,16 @@ public class PriorityCollisionHandler {
         System.out.println("Event added successfully.");
     }
 
-    private static void moveEvent(Event event, int newStartTime) {
-        int newEndTime = newStartTime + (event.getEndTime() - event.getStartTime());
-        event = new Event(event.getTitle(), event.getDate(), newStartTime, newEndTime, event.getPriority());
-        System.out.println("Event moved to new time: " + event);
-    }
+    private static void moveExistingEvent(Event existingEvent, int newStartTime, List<Event> eventList) {
+        int duration = existingEvent.getEndTime() - existingEvent.getStartTime();
+        int newEndTime = newStartTime + duration;
 
-    private static void printEventDetails(Event event) {
-        System.out.println("Event: " + event.getTitle());
-        System.out.println("Date: " + event.getDate());
-        System.out.println("Start Time: " + event.getStartHHMM());
-        System.out.println("End Time: " + event.getEndHHMM());
-        System.out.println("Priority: " + event.getPriority());
+        Event updatedEvent = new Event(existingEvent.getTitle(), existingEvent.getDate(), newStartTime, newEndTime, existingEvent.getPriority());
+
+        // Update the event in the list
+        int index = eventList.indexOf(existingEvent);
+        if (index != -1) {
+            eventList.set(index, updatedEvent); // Replace the old event with the updated one
+        }
     }
 }

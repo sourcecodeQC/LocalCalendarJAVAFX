@@ -1,17 +1,21 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
 
-<AnchorPane xmlns:fx="http://javafx.com/fxml" fx:controller="com.example.localcalendarjavafx.CalendarController">
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ListView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<AnchorPane xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/23.0.1" fx:controller="com.example.localcalendarjavafx.CalendarController">
     <children>
-        <TextField fx:id="eventTitleField" promptText="Enter event title" layoutX="14.0" layoutY="14.0" />
-        <TextField fx:id="eventDateField" promptText="Enter event date (YYYY-MM-DD)" layoutX="14.0" layoutY="50.0" />
-        <TextField fx:id="eventStartTimeField" promptText="Enter start time (HHMM)" layoutX="14.0" layoutY="86.0" />
-        <TextField fx:id="eventEndTimeField" promptText="Enter end time (HHMM)" layoutX="14.0" layoutY="122.0" />
-        <TextField fx:id="eventPriorityField" promptText="Enter priority" layoutX="14.0" layoutY="158.0" />
-        <Button fx:id="saveButton" text="Save" onAction="#handleSaveButtonAction" layoutX="14.0" layoutY="200.0" />
-        <Button fx:id="deleteButton" text="Delete" onAction="#handleDeleteButtonAction" layoutX="100.0" layoutY="200.0" />
-        <Button fx:id="refreshButton" text="Refresh" onAction="#handleRefreshButtonAction" layoutX="180.0" layoutY="200.0" />
+        <TextField fx:id="eventTitleField" layoutX="14.0" layoutY="14.0" promptText="Enter event title" />
+        <TextField fx:id="eventDateField" layoutX="14.0" layoutY="50.0" promptText="Enter event date (YYYY-MM-DD)" />
+        <TextField fx:id="eventStartTimeField" layoutX="14.0" layoutY="86.0" promptText="Enter start time (HHMM)" />
+        <TextField fx:id="eventEndTimeField" layoutX="14.0" layoutY="122.0" promptText="Enter end time (HHMM)" />
+        <TextField fx:id="eventPriorityField" layoutX="14.0" layoutY="158.0" promptText="Enter priority" />
+        <Button fx:id="addEventButton" layoutX="14.0" layoutY="200.0" onAction="#handleAddButtonAction" text="Add" />
+        <Button fx:id="deleteButton" layoutX="67.0" layoutY="200.0" onAction="#handleDeleteButtonAction" text="Delete" />
+        <Button fx:id="refreshButton" layoutX="134.0" layoutY="200.0" onAction="#handleRefreshButtonAction" text="Refresh" />
         <ListView fx:id="eventListView" layoutX="14.0" layoutY="240.0" prefHeight="200.0" prefWidth="300.0" />
+        <Button fx:id="saveAllButton" layoutX="206.0" layoutY="200.0" onAction="#handleSaveAllEvents" text="Save All" />
     </children>
 </AnchorPane>
