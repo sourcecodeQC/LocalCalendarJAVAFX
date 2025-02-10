@@ -1,11 +1,11 @@
 package com.example.localcalendarjavafx;
 
 public class Event {
-    private String title;
-    private String date; // Assuming date is a String for simplicity
-    private int startTime; // Start time in minutes
-    private int endTime; // End time in minutes
-    private int priority;
+    private final String title;
+    private final String date; // Assuming date is a String for simplicity
+    private final int startTime; // Start time in minutes
+    private final int endTime; // End time in minutes
+    private final int priority;
 
     public Event(String title, String date, int startTime, int endTime, int priority) {
         this.title = title;

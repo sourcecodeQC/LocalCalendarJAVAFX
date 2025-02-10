@@ -1,5 +1,8 @@
 package com.example.localcalendarjavafx;
 
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
+
 import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -25,7 +28,8 @@ public class FileManagerIO {
                 outputIO.newLine();
                 System.out.println("Saving event: " + event); // Debug statement
             }
-            System.out.println("Events saved to " + FILENAME);
+            System.out.println("All events saved to " + FILENAME);
+            showConfirmationPopup(); // Show confirmation popup after saving
         } catch (IOException e) {
             System.err.println("Error saving events: " + e.getMessage());
         }
@@ -33,6 +37,12 @@ public class FileManagerIO {
 
     public static List<Event> loadEvents() {
         List<Event> events = new ArrayList<>();
+        File file = new File(FILENAME);
+        if (!file.exists()) {
+            System.out.println("No saved events found. Returning an empty list.");
+            return events; // Return empty list if file does not exist
+        }
+
         try (BufferedReader fetchIO = new BufferedReader(new FileReader(FILENAME))) {
             String line;
             fetchIO.readLine(); // Skip header
@@ -55,5 +65,13 @@ public class FileManagerIO {
             System.err.println("Error parsing event data: " + e.getMessage());
         }
         return events;
+    }
+
+    private static void showConfirmationPopup() {
+        Alert alert = new Alert(AlertType.INFORMATION);
+        alert.setTitle("Save Confirmation");
+        alert.setHeaderText(null);
+        alert.setContentText("All events have been saved successfully!");
+        alert.showAndWait();
     }
 }
