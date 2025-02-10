@@ -7,7 +7,6 @@ public class Event {
     private int endTime; // End time in minutes
     private int priority;
 
-    // Updated constructor to match the parameters
     public Event(String title, String date, int startTime, int endTime, int priority) {
         this.title = title;
         this.date = date;
@@ -36,8 +35,22 @@ public class Event {
         return priority;
     }
 
+    // Method to get start time in HHMM format
+    public String getStartHHMM() {
+        int hours = startTime / 60;
+        int minutes = startTime % 60;
+        return String.format("%02d%02d", hours, minutes);
+    }
+
+    // Method to get end time in HHMM format
+    public String getEndHHMM() {
+        int hours = endTime / 60;
+        int minutes = endTime % 60;
+        return String.format("%02d%02d", hours, minutes);
+    }
+
     @Override
     public String toString() {
-        return String.format("%s on %s from %d to %d (Priority: %d)", title, date, startTime, endTime, priority);
+        return String.format("%s on %s from %s to %s (Priority: %d)", title, date, getStartHHMM(), getEndHHMM(), priority);
     }
 }

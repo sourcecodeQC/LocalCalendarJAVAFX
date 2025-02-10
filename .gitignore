@@ -36,3 +36,4 @@ build/
 
 ### Mac OS ###
 .DS_Store
+/SAVE_DATA/events.csv

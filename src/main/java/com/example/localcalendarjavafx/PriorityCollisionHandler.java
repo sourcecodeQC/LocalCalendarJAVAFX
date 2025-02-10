@@ -1,26 +1,29 @@
 package com.example.localcalendarjavafx;
 
-import java.util.List;
-
 public class PriorityCollisionHandler {
 
-    public static void checkForCollisions(List<Event> events) {
-        for (int i = 0; i < events.size(); i++) {
-            Event event1 = events.get(i);
-            for (int j = i + 1; j < events.size(); j++) {
-                Event event2 = events.get(j);
-                // Check for time collisions
-                if (event1.getDate().equals(event2.getDate())) {
-                    if (isOverlapping(event1, event2)) {
-                        System.out.println("Collision detected between: " + event1.getTitle() + " and " + event2.getTitle());
-                    }
-                }
-            }
-        }
+    /**
+     * Checks if two events collide based on their start and end times.
+     *
+     * @param event1 The first event to check.
+     * @param event2 The second event to check.
+     * @return true if the events collide, false otherwise.
+     */
+    public static boolean checkCollision(Event event1, Event event2) {
+        // Check if the events collide based on their start and end times
+        return (event1.getStartTime() < event2.getEndTime() && event1.getEndTime() > event2.getStartTime());
     }
 
-    private static boolean isOverlapping(Event event1, Event event2) {
-        // Check if event1 overlaps with event2
-        return (event1.getStartHHMM() < event2.getEndHHMM() && event1.getEndHHMM() > event2.getStartHHMM());
+    /**
+     * Prints the details of an event.
+     *
+     * @param event The event whose details are to be printed.
+     */
+    public static void printEventDetails(Event event) {
+        System.out.println("Event: " + event.getTitle());
+        System.out.println("Date: " + event.getDate());
+        System.out.println("Start Time: " + event.getStartHHMM());
+        System.out.println("End Time: " + event.getEndHHMM());
+        System.out.println("Priority: " + event.getPriority());
     }
 }
