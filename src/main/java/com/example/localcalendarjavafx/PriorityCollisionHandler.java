@@ -64,12 +64,12 @@ public class PriorityCollisionHandler {
     }
 
     private static void moveEvent(Event event, int newStartTime) {
-        int newEndTime = newStartTime + (event.getEndTime() - event.getStartTime()) + 30; // Move by 30 minutes
+        int newEndTime = newStartTime + (event.getEndTime() - event.getStartTime());
         event = new Event(event.getTitle(), event.getDate(), newStartTime, newEndTime, event.getPriority());
         System.out.println("Event moved to new time: " + event);
     }
 
-    public static void printEventDetails(Event event) {
+    private static void printEventDetails(Event event) {
         System.out.println("Event: " + event.getTitle());
         System.out.println("Date: " + event.getDate());
         System.out.println("Start Time: " + event.getStartHHMM());

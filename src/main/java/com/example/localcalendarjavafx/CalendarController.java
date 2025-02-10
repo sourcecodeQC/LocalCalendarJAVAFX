@@ -1,7 +1,6 @@
 package com.example.localcalendarjavafx;
 
 import javafx.fxml.FXML;
-import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
@@ -44,7 +43,6 @@ public class CalendarController {
 
         Event newEvent = new Event(title, date, startTime, endTime, priority); // Create new event
         PriorityCollisionHandler.handleEventAddition(newEvent, CalendarManager.getEvents(), eventListView); // Check for collisions
-        refreshEvents(); // Refresh the event list after adding
     }
 
     @FXML
@@ -56,7 +54,7 @@ public class CalendarController {
             displayEvents(); // Refresh the ListView
             System.out.println("Event deleted successfully.");
         } else {
-            showAlert("No event selected for deletion.");
+            System.out.println("No event selected for deletion.");
         }
     }
 
@@ -74,13 +72,5 @@ public class CalendarController {
         List<Event> events = CalendarManager.getEvents(); // Get events from manager
         eventListView.getItems().clear(); // Clear existing items
         eventListView.getItems().addAll(events); // Add all events to the ListView
-    }
-
-    private void showAlert(String message) {
-        Alert alert = new Alert(Alert.AlertType.INFORMATION);
-        alert.setTitle("Information");
-        alert.setHeaderText(null);
-        alert.setContentText(message);
-        alert.showAndWait();
     }
 }
