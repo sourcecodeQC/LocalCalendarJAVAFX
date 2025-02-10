@@ -11,6 +11,8 @@ public class CalendarController {
     @FXML
     private Button saveButton;
     @FXML
+    private Button deleteButton; // New delete button
+    @FXML
     private TextField eventTitleField; // Field for event title
     @FXML
     private TextField eventDateField; // Field for event date
@@ -32,9 +34,20 @@ public class CalendarController {
         int priority = Integer.parseInt(eventPriorityField.getText());
 
         Event newEvent = new Event(title, date, startTime, endTime, priority); // Create new event
-        CalendarManager.addEvent(newEvent); // Add event to manager
-        CalendarManager.saveEvents(); // Save events using the original method
-        displayEvents(); // Refresh the event display
+        PriorityCollisionHandler.handleEventAddition(newEvent, CalendarManager.getEvents(), eventListView); // Check for collisions
+    }
+
+    @FXML
+    public void handleDeleteButtonAction() {
+        Event selectedEvent = eventListView.getSelectionModel().getSelectedItem();
+        if (selectedEvent != null) {
+            CalendarManager.getEvents().remove(selectedEvent); // Remove from the manager
+            FileManagerIO.saveEvents(CalendarManager.getEvents()); // Save updated events
+            displayEvents(); // Refresh the ListView
+            System.out.println("Event deleted successfully.");
+        } else {
+            System.out.println("No event selected for deletion.");
+        }
     }
 
     @FXML
