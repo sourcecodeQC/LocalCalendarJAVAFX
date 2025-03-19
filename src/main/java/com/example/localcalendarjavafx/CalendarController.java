@@ -7,6 +7,7 @@ import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 
+import java.util.Arrays;
 import java.util.List;
 
 public class CalendarController {
@@ -21,6 +22,8 @@ public class CalendarController {
     @FXML
     public Button exitButton;
     @FXML
+    public Button sortToggleButton; // Button for toggling sort
+    @FXML
     private TextField eventTitleField; // Field for event title
     @FXML
     private TextField eventDateField; // Field for event date
@@ -32,6 +35,12 @@ public class CalendarController {
     private TextField eventPriorityField; // Field for event priority
     @FXML
     private ListView<Event> eventListView; // ListView to display events
+
+    private enum SortOrder {
+        ORIGINAL, ASCENDING, DESCENDING
+    }
+
+    private SortOrder currentSortOrder = SortOrder.ORIGINAL; // Track current sort order
 
     @FXML
     public void initialize() {
@@ -93,6 +102,42 @@ public class CalendarController {
         System.out.println("All displayed events saved successfully.");
         Stage stage = (Stage) exitButton.getScene().getWindow();
         stage.close();
+    }
 
+    @FXML
+    public void handleSortToggleButtonAction() {
+        switch (currentSortOrder) {
+            case ORIGINAL:
+                currentSortOrder = SortOrder.ASCENDING; // Change to ascending
+                sortToggleButton.setText("Sort Descending");
+                break;
+            case ASCENDING:
+                currentSortOrder = SortOrder.DESCENDING; // Change to descending
+                sortToggleButton.setText("Show Original Order");
+                break;
+            case DESCENDING:
+                currentSortOrder = SortOrder.ORIGINAL; // Change to original
+                sortToggleButton.setText("Sort Ascending");
+                break;
+        }
+        updateEventListView(); // Update the ListView based on the current sort order
+    }
+
+    private void updateEventListView() {
+        Event[] eventsToDisplay;
+        switch (currentSortOrder) {
+            case ASCENDING:
+                eventsToDisplay = CalendarManager.sortGUIPriority(true); // Sort ascending
+                break;
+            case DESCENDING:
+                eventsToDisplay = CalendarManager.sortGUIPriority(false); // Sort descending
+                break;
+            case ORIGINAL:
+            default:
+                eventsToDisplay = CalendarManager.getEvents().toArray(new Event[0]); // Original order
+                break;
+        }
+        eventListView.getItems().clear(); // Clear existing items
+        eventListView.getItems().addAll(Arrays.asList(eventsToDisplay)); // Add events to the ListView
     }
 }

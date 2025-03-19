@@ -29,7 +29,7 @@ public class CalendarManager {
 
     //method to sort events ascending/decesnding based on priority
 
-    public static Event[] sortGUIPiority(boolean ascending){
+    public static Event[] sortGUIPriority(boolean ascending){
 
         Event[] sortedEvents = events.toArray(new Event[0]);
 
@@ -54,7 +54,7 @@ public class CalendarManager {
         return sortedEvents;
     }
 
-    // Method to display events
+
     public void displayEvents(Event[] eventsToDisplay) {
         for (Event event : eventsToDisplay) {
             System.out.println(event);

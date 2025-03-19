@@ -11,7 +11,7 @@ public class Main extends Application {
     public void start(Stage primaryStage) throws Exception {
         Parent root = FXMLLoader.load(getClass().getResource("calendar_view.fxml"));
         primaryStage.setTitle("Local Calendar");
-        primaryStage.setScene(new Scene(root, 350, 500));
+        primaryStage.setScene(new Scene(root, 500, 500));
         primaryStage.show();
     }
 
