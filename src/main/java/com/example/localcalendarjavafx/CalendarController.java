@@ -6,9 +6,16 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
+import javafx.scene.control.Dialog;
+import javafx.scene.control.ButtonType;
+import javafx.scene.control.ButtonBar;
+import javafx.scene.layout.VBox;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.Optional;
 
 public class CalendarController {
 
@@ -58,6 +65,74 @@ public class CalendarController {
 
         Event newEvent = new Event(title, date, startTime, endTime, priority); // Create new event
         PriorityCollisionHandler.handleEventAddition(newEvent, CalendarManager.getEvents(), eventListView); // Check for collisions
+    }
+
+    @FXML
+    public void handleEditButtonAction() {
+        Event selectedEvent = eventListView.getSelectionModel().getSelectedItem();
+        if (selectedEvent != null) {
+            editEvent(selectedEvent); // Call the edit method
+        } else {
+            System.out.println("No event selected for editing.");
+        }
+    }
+
+    private void editEvent(Event event) {
+        Dialog<Event> dialog = new Dialog<>();
+        dialog.setTitle("Edit Event");
+
+        // Create fields for title, date, start time, end time, and priority
+        TextField titleField = new TextField(event.getTitle());
+        TextField dateField = new TextField(event.getDate());
+        TextField startTimeField = new TextField(String.valueOf(event.getStartTime()));
+        TextField endTimeField = new TextField(String.valueOf(event.getEndTime()));
+        TextField priorityField = new TextField(String.valueOf(event.getPriority()));
+
+        // Set up the dialog layout
+        VBox vbox = new VBox(titleField, dateField, startTimeField, endTimeField, priorityField);
+        dialog.getDialogPane().setContent(vbox);
+
+        // Add buttons for confirmation
+        ButtonType confirmButton = new ButtonType("Update", ButtonBar.ButtonData.OK_DONE);
+        dialog.getDialogPane().getButtonTypes().addAll(confirmButton, ButtonType.CANCEL);
+
+        // Handle the result
+        dialog.setResultConverter(dialogButton -> {
+            if (dialogButton == confirmButton) {
+                // Create new event with updated values
+                Event updatedEvent = new Event(
+                        titleField.getText(),
+                        dateField.getText(),
+                        Integer.parseInt(startTimeField.getText()),
+                        Integer.parseInt(endTimeField.getText()),
+                        Integer.parseInt(priorityField.getText())
+                );
+
+                // Check for conflicts using the priority handler
+                if (PriorityCollisionHandler.hasConflict(updatedEvent, CalendarManager.getEvents())) {
+                    showConflictAlert();
+                    return null; // Return null to indicate no update
+                }
+
+                // Update the event
+                eventListView.getItems().remove(event); // Remove old event from the list
+                CalendarManager.addEvent(updatedEvent); // Add updated event
+                displayEvents(); // Refresh the ListView
+                return updatedEvent;
+            }
+            return null;
+        });
+
+        dialog.showAndWait();
+    }
+
+    // Method to show conflict alert
+    private void showConflictAlert() {
+        Alert alert = new Alert(AlertType.WARNING);
+        alert.setTitle("Conflict Detected");
+        alert.setHeaderText("Event Conflict");
+        alert.setContentText("The event you are trying to edit conflicts with an existing event.");
+        alert.showAndWait();
     }
 
     @FXML

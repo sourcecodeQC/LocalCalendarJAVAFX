@@ -1,7 +1,6 @@
 package com.example.localcalendarjavafx;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 public class CalendarManager {
@@ -27,10 +26,8 @@ public class CalendarManager {
         System.out.println("All events saved successfully."); // Debug statement
     }
 
-    //method to sort events ascending/decesnding based on priority
-
-    public static Event[] sortGUIPriority(boolean ascending){
-
+    // Method to sort events ascending/descending based on priority
+    public static Event[] sortGUIPriority(boolean ascending) {
         Event[] sortedEvents = events.toArray(new Event[0]);
 
         // Selection Sort algorithm
@@ -44,7 +41,6 @@ public class CalendarManager {
                 }
             }
 
-
             if (index != i) {
                 Event temp = sortedEvents[i];
                 sortedEvents[i] = sortedEvents[index];
@@ -54,13 +50,9 @@ public class CalendarManager {
         return sortedEvents;
     }
 
-
     public void displayEvents(Event[] eventsToDisplay) {
         for (Event event : eventsToDisplay) {
             System.out.println(event);
         }
-
-
-
     }
 }

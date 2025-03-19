@@ -15,6 +15,15 @@ public class PriorityCollisionHandler {
                 (event1.getDate().equals(event2.getDate()));
     }
 
+    public static boolean hasConflict(Event newEvent, List<Event> existingEvents) {
+        for (Event existingEvent : existingEvents) {
+            if (checkCollision(newEvent, existingEvent)) {
+                return true; // Conflict found
+            }
+        }
+        return false; // No conflict
+    }
+
     public static void handleEventAddition(Event newEvent, List<Event> existingEvents, ListView<Event> eventListView) {
         for (Event existingEvent : existingEvents) {
             if (checkCollision(newEvent, existingEvent)) {
