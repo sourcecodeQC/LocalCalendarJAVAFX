@@ -15,7 +15,6 @@ import javafx.scene.control.Alert.AlertType;
 
 import java.util.Arrays;
 import java.util.List;
-import java.util.Optional;
 
 public class CalendarController {
 
@@ -84,8 +83,8 @@ public class CalendarController {
         // Create fields for title, date, start time, end time, and priority
         TextField titleField = new TextField(event.getTitle());
         TextField dateField = new TextField(event.getDate());
-        TextField startTimeField = new TextField(String.valueOf(event.getStartTime()));
-        TextField endTimeField = new TextField(String.valueOf(event.getEndTime()));
+        TextField startTimeField = new TextField(String.valueOf(MinToHHMM.minToHHMM(event.getStartTime()))); // Convert minutes to HHMM
+        TextField endTimeField = new TextField(String.valueOf(MinToHHMM.minToHHMM(event.getEndTime()))); // Convert minutes to HHMM
         TextField priorityField = new TextField(String.valueOf(event.getPriority()));
 
         // Set up the dialog layout
@@ -103,8 +102,8 @@ public class CalendarController {
                 Event updatedEvent = new Event(
                         titleField.getText(),
                         dateField.getText(),
-                        Integer.parseInt(startTimeField.getText()),
-                        Integer.parseInt(endTimeField.getText()),
+                        MinToHHMM.hhmmToMin(Integer.parseInt(startTimeField.getText())), // Convert HHMM to minutes
+                        MinToHHMM.hhmmToMin(Integer.parseInt(endTimeField.getText())), // Convert HHMM to minutes
                         Integer.parseInt(priorityField.getText())
                 );
 
