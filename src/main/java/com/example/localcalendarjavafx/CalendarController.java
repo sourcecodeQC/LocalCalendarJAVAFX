@@ -1,9 +1,11 @@
 package com.example.localcalendarjavafx;
 
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
+import javafx.stage.Stage;
 
 import java.util.List;
 
@@ -16,6 +18,8 @@ public class CalendarController {
     public Button deleteButton; // New delete button
     @FXML
     public Button refreshButton; // New refresh button
+    @FXML
+    public Button exitButton;
     @FXML
     private TextField eventTitleField; // Field for event title
     @FXML
@@ -80,5 +84,15 @@ public class CalendarController {
         List<Event> allEvents = CalendarManager.getEvents(); // Assuming this method retrieves all events
         FileManagerIO.saveEvents(allEvents); // Save all events to file
         System.out.println("All events saved successfully.");
+    }
+
+    @FXML
+    public void handleExitButtonAction() {
+        List<Event> allEvents = eventListView.getItems();
+        FileManagerIO.saveEvents(allEvents); // Save all displayed events
+        System.out.println("All displayed events saved successfully.");
+        Stage stage = (Stage) exitButton.getScene().getWindow();
+        stage.close();
+
     }
 }

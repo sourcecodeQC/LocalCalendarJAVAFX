@@ -46,7 +46,9 @@ public class PriorityCollisionHandler {
                         eventListView.getItems().remove(newEvent);
                         eventListView.getItems().add(updatedNewEvent);
                         existingEvents.add(updatedNewEvent);
-                    } else if (result.get() == amendNew) {
+                    }
+
+                    else if (result.get() == amendNew) {
                         int newStartTime = existingEvent.getEndTime() + 30;
                         int duration = newEvent.getEndTime() - newEvent.getStartTime();
                         int newEndTime = newStartTime + duration;
@@ -54,10 +56,14 @@ public class PriorityCollisionHandler {
                         eventListView.getItems().remove(newEvent);
                         eventListView.getItems().add(updatedEvent);
                         existingEvents.add(updatedEvent);
-                    } else if (result.get() == abort) {
+                    }
+
+                    else if (result.get() == abort) {
                         System.out.println("Aborting the addition of the new event.");
                         return;
-                    } else if (result.get() == override) {
+                    }
+
+                    else if (result.get() == override) {
                         eventListView.getItems().add(newEvent);
                         existingEvents.add(newEvent);
                     }
@@ -74,7 +80,7 @@ public class PriorityCollisionHandler {
 
     @NotNull
     private static Alert getAlert(Event newEvent, Event existingEvent) {
-        String message = newEvent.getPriority() < existingEvent.getPriority() ?
+        String message = newEvent.getPriority() > existingEvent.getPriority() ?
                 "New event has lower priority than an existing event!" :
                 "New event has higher priority than an existing event!";
 
